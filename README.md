@@ -20,7 +20,7 @@ PNG/JPEG/BMP/TIFF → PBM → SVG → DST
 - Автоматическое обнаружение контуров
 - Высокое качество трассировки
 
-### 2. Python конвертер (svg_to_dst/)
+### 2. Python конвертер (svg_to_dst.py)
 Конвертирует SVG файлы в формат вышивки DST.
 
 **Возможности:**
@@ -109,10 +109,8 @@ source venv_pipeline/bin/activate
 
 ```
 stitch/
-├── svg_to_dst/             # Python конвертер
-│   └── svg_to_dst.py       # Конвертер SVG→DST
+├── svg_to_dst.py       # Конвертер SVG→DST
 ├── pictures/               # Тестовые изображения
-│   └── rabbit.png
 ├── pipeline.sh             # Основной пайплайн
 ├── Makefile                # Автоматизация установки
 ├── venv_pipeline/          # Виртуальное окружение для пайплайна

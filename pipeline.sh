@@ -151,26 +151,22 @@ fi
 print_info "Шаг 3: Конвертируем $SVG_FILE в DST..."
 print_info "Тип заливки: $FILL_TYPE, расстояние: $FILL_SPACING, ширина контура: $CONTOUR_WIDTH"
 
-# Переходим в директорию svg_to_dst и запускаем конвертер
-cd svg_to_dst
-if python3 svg_to_dst.py --svg-file "../$SVG_FILE" --contour-step "$CONTOUR_STEP" --contour-width "$CONTOUR_WIDTH"; then
+# Запускаем конвертер
+if python3 svg_to_dst.py --svg-file "$SVG_FILE" --contour-step "$CONTOUR_STEP" --contour-width "$CONTOUR_WIDTH"; then
     print_success "DST файл создан"
     # Перемещаем DST файл в нужное место
     DST_TEMP_FILE="$(basename "$SVG_FILE" .svg).dst"
     if [[ -f "$DST_TEMP_FILE" ]]; then
-        mv "$DST_TEMP_FILE" "../$OUTPUT_FILE"
+        mv "$DST_TEMP_FILE" "$OUTPUT_FILE"
         print_success "DST файл перемещён: $OUTPUT_FILE"
     else
         print_error "DST файл не найден: $DST_TEMP_FILE"
-        cd ..
         exit 1
     fi
 else
     print_error "Ошибка при создании DST файла"
-    cd ..
     exit 1
 fi
-cd ..
 
 if [[ ! -f "$OUTPUT_FILE" ]]; then
     print_error "DST файл не создан: $OUTPUT_FILE"

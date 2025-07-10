@@ -45,3 +45,4 @@ Thumbs.db
 *.dst
 *.svg
 pictures/*
+.env
