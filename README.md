@@ -26,6 +26,7 @@ PNG/JPEG/BMP/TIFF → PBM → SVG → DST
 **Возможности:**
 - Использует pyembroidery и svgelements
 - Поддержка различных форматов вышивки
+- Позволяет управлять толщиной линии и шагом дискретизации
 
 ### 3. Пайплайн (pipeline.sh)
 Объединяет все компоненты в единый процесс.
@@ -59,14 +60,14 @@ source venv_pipeline/bin/activate
 ./pipeline.sh image.png
 ```
 
-### С заливкой
+### С увеличенной толщиной линии
 ```bash
-./pipeline.sh image.png --fill-type parallel --fill-spacing 2.0
+./pipeline.sh image.png --contour-width 3
 ```
 
-### С настройками
+### С уменьшенным шагом дискретизации
 ```bash
-./pipeline.sh image.png -o output.dst --keep-svg
+./pipeline.sh image.png --contour-step 1.0
 ```
 
 ### Сохранение промежуточного SVG
@@ -78,8 +79,8 @@ source venv_pipeline/bin/activate
 
 - `-o, --output FILE` - выходной DST файл
 - `--keep-svg` - сохранить промежуточный SVG файл
-- `--fill-type TYPE` - тип заливки: none, parallel (по умолчанию: none)
-- `--fill-spacing N` - расстояние между линиями заливки (по умолчанию: 2.0)
+- `--contour-step N` - шаг дискретизации path (по умолчанию: 2.0)
+- `--contour-width N` - ширина линии (количество параллельных линий, по умолчанию: 1)
 - `-h, --help` - показать справку
 
 ## Примеры
@@ -89,9 +90,14 @@ source venv_pipeline/bin/activate
 ./pipeline.sh pictures/rabbit.png
 ```
 
-### Конвертация с заливкой
+### С увеличенной толщиной линии
 ```bash
-./pipeline.sh pictures/rabbit.png --fill-type parallel --fill-spacing 3.0
+./pipeline.sh pictures/rabbit.png --contour-width 3
+```
+
+### С уменьшенным шагом дискретизации
+```bash
+./pipeline.sh pictures/rabbit.png --contour-step 1.0
 ```
 
 ### Конвертация с сохранением SVG
@@ -104,7 +110,7 @@ source venv_pipeline/bin/activate
 ```
 stitch/
 ├── svg_to_dst/             # Python конвертер
-│   └── svg_to_dst.py       # Конвертер SVG→DST с заливкой
+│   └── svg_to_dst.py       # Конвертер SVG→DST
 ├── pictures/               # Тестовые изображения
 │   └── rabbit.png
 ├── pipeline.sh             # Основной пайплайн
@@ -126,8 +132,8 @@ stitch/
 - Работает лучше всего с изображениями с четкими контурами
 - Для сложных изображений может потребоваться настройка параметров
 - Цветная информация теряется (конвертируется в черно-белое)
-- Заливка работает только для замкнутых контуров
+- Заливка областей не поддерживается, только контуры
 
 ## Результат
 
-Пайплайн создает файл вышивки в формате DST, который можно использовать на вышивальных машинах. При включенной заливке замкнутые области будут заполнены параллельными линиями стежков. 
+Пайплайн создает файл вышивки в формате DST, который можно использовать на вышивальных машинах. Контуры изображения будут переведены в линии стежков с заданной толщиной и дискретизацией. 
