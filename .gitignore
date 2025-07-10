@@ -44,4 +44,4 @@ Thumbs.db
 # Project specific
 *.dst
 *.svg
-!pictures/*.svg 
+pictures/*
